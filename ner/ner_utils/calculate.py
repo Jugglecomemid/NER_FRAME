@@ -1,5 +1,5 @@
 """
-caculate.py: NER 算法中所有计算模块
+calculate.py: NER 算法中所有计算模块
 by: qliu
 update date: 2021-12-16
 """

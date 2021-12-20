@@ -14,6 +14,7 @@ class CommonConfig(object):
     不管使用哪个模型，都通用的配置参数
     """
     def __init__(self):
+        # 各类文件路径
         self.entities_file = 'data/original_data/entities.json'   # 以实体中英文分别作为 key & value 的 json 文件
         self.bert_model_dir = "hfl/chinese-bert-wwm-ext"
         self.dataset_dir = "data/model_data"
@@ -21,23 +22,31 @@ class CommonConfig(object):
         # 存放 daccano 生成的所有结果（格式需要为 xxx.jsonl）
         self.jsonl_files_dir = "data/jsonl" 
         self.server_ports_file = "data/original_data/ports.json"
+
+        # 数据大小 & 形式
         # (train, test, dev)的分割比例
         self.train_data_split = (0.6, 0.2, 0.2)
-        self.num_workers = cpu_count()
         self.max_seq_length = 256
         self.batch_size = 16
         self.do_lower_case = True
-        self.use_gpu = False
-        self.gpu = 0
-        self.device = self._check_gpu()
         self.shuffle_train_data = True
         self.pin_memory = False
+
+        # 模型训练环境
+        self.use_gpu = False
+        self.gpu = 0
+        self.num_workers = cpu_count()
+        self.device = self._check_gpu()
+
+        # 自定义实体字典
         self.entities_abbr_dict = self._get_entities_dict()
         self.abbr_entities_dict = {v: k for k, v in self.entities_abbr_dict.items()}
         self.labels_types = self._get_labels_types()
         self.labels_idx_dict = self._get_labels_idx()
         self.idx_labels_dict = self._get_idx_labels()
         self.labels_num = len(self.labels_types)
+
+        # 分字器
         self.tokenizer = BertTokenizer.from_pretrained(self.bert_model_dir, do_lower_case=self.do_lower_case)
 
     def update(self, **kwargs):
@@ -74,22 +83,28 @@ class ModelConfig(object):
     模型的训练＆优化参数，不同模型，其配置可能不一样
     """
     def __init__(self):
-        self.bert_model_name = "bert.pt"  # 不同模型不同名
+        # 模型结果文件名
+        self.bert_model_name = "bert.pt"
         self.bert_crf_model_name = "bert_crf.pt"
         self.bert_bilstm_crf_model_name = "bert_bilstm_crf.pt"
-        self.gradient_accumulation_steps = 1
-        self.warmup_proportion = 0.1
+
+        # 模型结构参数
+        self.dropout = 0.2
+        self.bert_hidden_size = 768
+        self.lstm_hidden_size = 64
+        self.lstm_layers = 1
+
+        # 模型训练次数 & 是否加载先前训练结果
+        self.load_checkpoint = False
         self.total_train_epochs = 20
+
         # 优化器参数
         self.lr = 5e-5
         self.crf_fc_lr = 8e-5
         self.weight_decay_finetune = 1e-5
         self.crf_fc_weight_decay = 5e-6
-        self.load_checkpoint = False
-        self.dropout = 0.2
-        self.bert_hidden_size = 768
-        self.lstm_hidden_size = 64
-        self.lstm_layers = 1
+        self.gradient_accumulation_steps = 1
+        self.warmup_proportion = 0.1
 
     def update(self, **kwargs):
         for k, v in kwargs.items():

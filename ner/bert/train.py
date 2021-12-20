@@ -6,7 +6,7 @@ update date: 2021-12-16
 import os, time, torch
 import torch.nn as nn
 import torch.optim as optim
-from ..ner_utils.caculate import warmup_linear
+from ..ner_utils.calculate import warmup_linear
 from .evaluate import evaluate
 from ..ner_utils.data_loader import NerBatchDataloader
 from .model import BertNer

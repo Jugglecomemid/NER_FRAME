@@ -7,7 +7,7 @@ import torch, os
 import torch.nn as nn
 from torch.autograd import Variable
 from transformers import BertModel
-from ..ner_utils.caculate import log_sum_exp_batch
+from ..ner_utils.calculate import log_sum_exp_batch
 
 class BertBiLstmCrf(nn.Module):
     def __init__(self, bert_model, labels_idx_dict, batch_size, dropout, hidden_size, lstm_hidden_size, lstm_layers, device):

@@ -6,7 +6,7 @@ update date: 2021-12-17
 import torch, os
 import torch.nn as nn
 from transformers import BertModel
-from ..ner_utils.caculate import log_sum_exp_batch
+from ..ner_utils.calculate import log_sum_exp_batch
 
 class BertCrf(nn.Module):
     def __init__(self, bert_model, labels_idx_dict, batch_size, dropout, hidden_size, device):

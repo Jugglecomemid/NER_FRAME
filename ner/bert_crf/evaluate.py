@@ -4,7 +4,7 @@ by: qliu
 update date: 2021-12-17
 """
 import time, torch
-from ..ner_utils.caculate import count_f1_score
+from ..ner_utils.calculate import count_f1_score
 
 def evaluate(model, dataloader, batch_size, epoch_th, dataset_name, device):
     print("start evaluating ...")
