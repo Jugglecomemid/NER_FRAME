@@ -13,14 +13,14 @@ NER：最简单的 NER 全流程组件
 - [文档结构](#文档结构)
 - [主要功能](#主要功能)
   - [1. 所有参数配置，一步到位](#1-所有参数配置一步到位)
-  - [2. 自定义实体字典](#2-自定义实体字典)
+  - [2. 自定义实体字典，适用各种 NER 场景](#2-自定义实体字典适用各种-ner-场景)
   - [3. 标签数据一键转换](#3-标签数据一键转换)
-  - [4. 模型训练 & 测试 & 部署](#4-模型训练-测试-部署)
+  - [4. 模型训练 & 测试 & 部署，四行搞定](#4-模型训练-测试-部署四行搞定)
     - [4.1 基于 BERT 的 NER 算法](#41-基于-bert-的-ner-算法)
     - [4.2 基于 BERT + CRF 的 NER 算法](#42-基于-bert-crf-的-ner-算法)
     - [4.3 基于 BERT + BILSTM + CRF 的 NER 算法](#43-基于-bert-bilstm-crf-的-ner-算法)
-  - [5. 检查人工标记数据的正确性](#5-检查人工标记数据的正确性)
-  - [6. 利用不同模型做 NER](#6-利用不同模型做-ner)
+  - [5. 自动化核查人工标签，进一步优化模型效果](#5-自动化核查人工标签进一步优化模型效果)
+  - [6. 不同模型自由切换，哪个好用用哪个](#6-不同模型自由切换哪个好用用哪个)
 - [参考论文](#参考论文)
 
 <!-- /code_chunk_output -->
@@ -39,7 +39,7 @@ NER：最简单的 NER 全流程组件
 ## 安装说明
 * 代码兼容 py3
 * 半自动安装：先下载 https://gitlab.mvalley.com/data-processing-infrastructure/ner ，解压后运行 `python setup.py sdist`，然后 cd dist/ ，最后 `pip install ner-0.0.1.tar.gz`
-* 手动安装：将 jieba 目录放置于当前目录或者 site-packages 目录
+* 手动安装：将 ner 目录放置于当前目录或者 site-packages 目录
 * 通过 `import ner` 来引用
 
 ## 文档结构
@@ -139,7 +139,7 @@ project
     mcfg = ModelConfig()
     ```
 
-###  2. 自定义实体字典
+###  2. 自定义实体字典，适用各种 NER 场景
 ----------------
 * 方法说明：
   * 开发者可以根据需要，指定不同的实体字典，然后将其存为 `entities.json`，存放在`ccfg.entities_file`路径下即可。
@@ -209,7 +209,7 @@ project
   - train.txt: 训练数据
     - 格式：同`dev.txt`
 
-###  4. 模型训练 & 测试 & 部署
+###  4. 模型训练 & 测试 & 部署，四行搞定
 -------------
 #### 4.1 基于 BERT 的 NER 算法
 `from ner.bert.train import train`
@@ -302,7 +302,7 @@ project
     * 运行代码：https://gitlab.mvalley.com/data-processing-infrastructure/ner/-/blob/master/bert_bilstm_crf.py
     * 访问链接：`"http://{}:{}/predict_by_bert_bilstm_crf".format(ports_dict["hosts"], ports_dict["bert_bilstm_crf"]) `
 
-###  5. 检查人工标记数据的正确性
+###  5. 自动化核查人工标签，进一步优化模型效果
 -------------
 `from ner.ner_utils.data_checker import DatasetChecker`
 * 接口说明：
@@ -339,7 +339,7 @@ dataset_checker.check_dataset(sents_labels_tuples)
     年
     ...
     ```
-###  6. 利用不同模型做 NER 
+###  6. 不同模型自由切换，哪个好用用哪个
 -------------
 * 代码示例：
   * 获取 [实体字符串,实体类别] 的列表
