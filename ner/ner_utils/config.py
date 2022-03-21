@@ -20,7 +20,7 @@ class CommonConfig(object):
         self.dataset_dir = "data/model_data"
         self.checkpoint_dir = "data/result"
         # 存放 daccano 生成的所有结果（格式需要为 xxx.jsonl）
-        self.jsonl_files_dir = "data/jsonl" 
+        self.jsonl_files_dir = "data/original_data/jsonl" 
         self.server_ports_file = "data/original_data/ports.json"
 
         # 数据大小 & 形式
