@@ -237,11 +237,14 @@ project
     test(common_config=ccfg, model_config=mcfg)
     ```
 * 模型部署
-  * 更改参数：更改代码中的`workspace_path`为指定的工作路径，然后在`data/original_data/port.json`中指定`hosts` & `bert`端口即可
+  * 更改参数：更改代码中的`workspace_path`为指定的工作路径，然后在`data/original_data/ports.json`中指定`hosts` & `bert`端口即可
   * 运行代码：https://gitlab.mvalley.com/data-processing-infrastructure/ner/-/blob/master/bert.py
   * 用法：
       ```python
       import requests, json
+
+      with open("./data/original_data/ports.json",'r') as load_f:
+          ports_dict = json.load(load_f)
 
       sent = "2020年4月15日，嗦粉佬宣布完成1000万人民币的天使轮融资，由新加坡优贝迪基金会领投，餐饮品牌价值发现平台吃货大陆跟投。"
       data = {"sent": sent}

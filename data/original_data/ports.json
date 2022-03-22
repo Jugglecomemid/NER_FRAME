@@ -1,0 +1,6 @@
+{
+    "bert": 8111,
+    "bert_crf": 8112,
+    "bert_bilstm_crf": 8113,
+    "hosts": "192.168.88.201"
+}
