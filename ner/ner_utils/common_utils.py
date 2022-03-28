@@ -54,7 +54,7 @@ def get_tokens_length(token):
     return len(re.sub("##", "", token))
 
 def get_entity_type(label):
-    entity_type = re.search("[^_]$", label)
+    entity_type = re.search("[^_]+$", label)
     if not entity_type:
         return "O"
     return entity_type.group(0)
