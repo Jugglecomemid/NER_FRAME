@@ -21,6 +21,7 @@ NER：最简单的 NER 全流程组件
     - [4.3 基于 BERT + BILSTM + CRF 的 NER 算法](#43-基于-bert-bilstm-crf-的-ner-算法)
   - [5. 自动化核查人工标签，进一步优化模型效果](#5-自动化核查人工标签进一步优化模型效果)
   - [6. 不同模型自由切换，哪个好用用哪个](#6-不同模型自由切换哪个好用用哪个)
+  - [7. 训练数据自动生成，省时省力超厉害 ：）](#7-训练数据自动生成省时省力超厉害)
 - [参考论文](#参考论文)
 
 <!-- /code_chunk_output -->
@@ -378,6 +379,24 @@ dataset_checker.check_dataset(sents_labels_tuples)
     [46, 56, '属性名词'],
     [56, 60, '关联方']]
     ```
+
+###  7. 训练数据自动生成，省时省力超厉害 ：）
+-------------
+* 代码示例：
+  * 模型回标，自动生成训练数据
+    ```python
+    from ner.ner_utils.post_processing import generate_and_save_new_training_data
+
+    sents = ["一网打尽Google、Amazon、Microsoft、Facebook在2018年KDD上的论文：神经网络、大规模计算是热点。"]
+    save_path = "../training_data.jsonl"  # jsonl 文件别错了
+    generate_and_save_new_training_data(sents, save_path, ccfg, model_name="bert_bilstm_crf")
+    ```
+  * 输出：
+  "../training_data.jsonl" 路径下会多一个文件，该文件可直接导入 doccano 进行结果核查，文件形式如下：
+    ```
+    {"id": "0", "data": "一网打尽Google、Amazon、Microsoft、Facebook在2018年KDD上的论文：神经网络、大规模计算是热点。", "label": [[4, 10, "有效词"], [11, 17, "有效词"], [18, 27, "有效词"], [28, 36, "有效词"], [42, 44, "有效词"], [50, 54, "有效词"], [55, 60, "有效词"]]}
+    ```
+
 
 ## 参考论文
 * 《BERT: Pre-training of Deep Bidirectional Transformers for

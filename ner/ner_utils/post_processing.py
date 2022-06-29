@@ -12,6 +12,7 @@ from .common_utils import (
     read_json
 )
 from .config import CommonConfig
+from .data_checker import DatasetChecker
 
 cfg = CommonConfig()
 abbr_entities_dict = cfg.abbr_entities_dict
@@ -56,3 +57,23 @@ def get_sent_entities(sent, tokens, labels, return_idx=True):
     if return_idx:
         return labels_list
     return [[sent[ll[0]: ll[1]].strip(), ll[-1]] for ll in labels_list]
+
+def generate_and_save_new_training_data(sents, save_path, ccfg, model_name="bert_bilstm_crf"):
+    """
+    利用模型对数据集进行预测，返回可导入 doccano 的 jsonl 文件
+    Args:
+        sents: list, [str1, str2, ...]
+        save_path: str, 文件保存路径
+        ccfg: CommonConfig(), 通用配置
+        model_name: str, ["bert", "bert_crf", "bert_bilstm_crf"]，三选一，默认 bert_bilstm_crf， 模型已部署好的前提！
+    """
+    dataset_checker = DatasetChecker(ccfg, model_name)
+    with jsonlines.open(save_path, "w") as fp:
+        for i, s in enumerate(sents):
+            if len(s) > 250:
+                continue
+            tokens, labels = dataset_checker.get_sent_predict(s)
+            entities_idxes = get_sent_entities(sent=s, tokens=tokens, labels=labels,return_idx=True)
+            fp.write({"id": str(i), "data": s, "label": entities_idxes})
+            pbr.update(1)
+    print("done ...")
