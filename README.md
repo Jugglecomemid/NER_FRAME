@@ -44,7 +44,7 @@ NER：最简单的 NER 全流程组件
 * 通过 `import ner` 来引用
 
 ## 文档结构
-**标 * 为必须准备好的文件夹 / 文件**
+**标 * 为必须准备好的文件夹 / 文件，特别重要！！！**
 ```
 project
 │   README.md
@@ -119,9 +119,10 @@ project
 ```
 
 ## 主要功能
+**请先按顺序一步步来！请先按顺序一步步来！请先按顺序一步步来！**
 ###  1. 所有参数配置，一步到位
 ------------------
-* 接口说明：
+* 接口说明：**(copy 示例代码，确定全局路径无误即可)**
   * `set_work_dir` 指定路径作为全局的工作路径，之后所有路径都是该路径的相对路径。
   * `CommonConfig` 通用参数模块：不管使用哪个模型，都通用的配置参数；可分五类：各类文件路径、数据大小 & 形式设置参数、模型训练环境设置、自定义实体字典、分字器。
   * `ModelConfig`模型的训练 & 优化相关的参数；可分四类：模型结果文件名、模型结构参数、模型训练次数 & 是否加载先前训练结果、优化器参数。
@@ -142,7 +143,7 @@ project
 
 ###  2. 自定义实体字典，适用各种 NER 场景
 ----------------
-* 方法说明：
+* 方法说明：**（确定实体字典无误，然后 copy 示例代码即可）**
   * 开发者可以根据需要，指定不同的实体字典，然后将其存为 `entities.json`，存放在`ccfg.entities_file`路径下即可。
   * 用法：ccfg.update(entities_file=entities_file_name) # entities_file_name 为实体字典的相对路径。
   * 实体字典格式和 `data/original_data/entities.json` 一样，以 `实体名` 为 key，`实体缩写` 为 value。诸如「O、X、START、END」不需要添加至实体字典。
@@ -175,7 +176,7 @@ project
 
 ###  3. 标签数据一键转换
 -------------
-* 方法说明：将 doccano 生成的标签结果，一键转换成可喂入模型的开发数据。
+* 方法说明：将 doccano 生成的标签结果，一键转换成可喂入模型的开发数据。**(copy 示例代码即可)**
 * 代码示例：
     ```python
     from ner.ner_utils.processing import InitialDataTxtGenerator
@@ -214,7 +215,7 @@ project
 -------------
 #### 4.1 基于 BERT 的 NER 算法
 `from ner.bert.train import train`
-* 接口说明：
+* 接口说明： **(可略，直接用 BERT + BILSTM + CRF)**
   * train(common_config, model_config)
     * common_config: 通用参数模块均可不做更改
     * model_config: 仅对「优化器参数」模块的参数做出微调即可（亦可保留默认值），即`lr`、`weight_decay_finetune`、`gradient_accumulation_steps`、`warmup_proportion`，若需保留不同参数下的不同模型结果，还需更改`bert_model_name`
@@ -237,9 +238,11 @@ project
     from ner.bert.test import test
     test(common_config=ccfg, model_config=mcfg)
     ```
-* 模型部署
+* 模型部署 **（可略，直接用 BERT + BILSTM + CRF）**
   * 更改参数：更改代码中的`workspace_path`为指定的工作路径，然后在`data/original_data/ports.json`中指定`hosts` & `bert`端口即可
   * 运行代码：https://gitlab.mvalley.com/data-processing-infrastructure/ner/-/blob/master/bert.py
+
+* 实体识别 **（重要，copy 示例代码即可）**
   * 用法：
       ```python
       import requests, json
@@ -250,7 +253,8 @@ project
       sent = "2020年4月15日，嗦粉佬宣布完成1000万人民币的天使轮融资，由新加坡优贝迪基金会领投，餐饮品牌价值发现平台吃货大陆跟投。"
       data = {"sent": sent}
       data = json.dumps({"sent": sent})
-      url = "http://{}:{}/predict_by_bert".format(ports_dict["hosts"], ports_dict["bert"]) 
+      url = "http://{}:{}/predict_by_bert".format(ports_dict["hosts"], ports_dict["bert"])  
+      # bert_bilstm_crf 的 url 为:  "http://{}:{}/predict_by_bert_bilstm_crf".format(self.ports_dict["hosts"], self.ports_dict["bert_bilstm_crf"])
       r = requests.post(url, data=data.encode("utf-8"))
       res = json.loads(r.text)
       print(res)
@@ -272,7 +276,7 @@ project
       ```
 #### 4.2 基于 BERT + CRF 的 NER 算法
 `from ner.bert_crf.train import train`
-* 接口说明：同上
+* 接口说明：同上  **(可略，直接用 BERT + BILSTM + CRF)**
 * 模型的训练 & 测试
     ```python
     # 训练
@@ -283,14 +287,14 @@ project
     from ner.bert_crf.test import test
     test(common_config=ccfg, model_config=mcfg)
     ```
-* 模型部署：
+* 模型部署： **(可略，直接用 BERT + BILSTM + CRF)**
   * 更改参数：更改代码中的`workspace_path`为指定的工作路径，然后在`data/original_data/port.json`中指定`hosts` & `bert`端口即可
   * 运行代码：https://gitlab.mvalley.com/data-processing-infrastructure/ner/-/blob/master/bert_crf.py
   * 访问链接：`http://{}:{}/predict_by_bert_crf".format(ports_dict["hosts"], ports_dict["bert_crf"]) `
 
 #### 4.3 基于 BERT + BILSTM + CRF 的 NER 算法
 `from ner.bert_bilstm_crf.train import train`
-* 接口说明：同上
+* 接口说明：同上  **(copy 示例代码即可)**
 * 模型的训练 & 测试
   ```python
     # 训练
@@ -301,7 +305,7 @@ project
     from ner.bert_bilstm_crf.test import test
     test(common_config=ccfg, model_config=mcfg)
     ```
-* 模型部署：
+* 模型部署：**(更改 port 配置后，终端 python bert_bilstm_crf.py 即可)**
     * 更改参数：更改代码中的`workspace_path`为指定的工作路径，然后在`data/original_data/port.json`中指定`hosts` & `bert`端口即可
     * 运行代码：https://gitlab.mvalley.com/data-processing-infrastructure/ner/-/blob/master/bert_bilstm_crf.py
     * 访问链接：`"http://{}:{}/predict_by_bert_bilstm_crf".format(ports_dict["hosts"], ports_dict["bert_bilstm_crf"]) `
@@ -309,7 +313,7 @@ project
 ###  5. 自动化核查人工标签，进一步优化模型效果
 -------------
 `from ner.ner_utils.data_checker import DatasetChecker`
-* 接口说明：
+* 接口说明：**(copy 示例代码即可)**
     * DatasetChecker(config, model_name)
     * config: 通用参数模块，无需更改
     * model_name: 指定的检查模型，可选`bert` & `bert_crf` & `bert_bilstm_crf`
@@ -345,10 +349,13 @@ dataset_checker.check_dataset(sents_labels_tuples)
     ```
 ###  6. 不同模型自由切换，哪个好用用哪个
 -------------
-* 代码示例：
+* 代码示例：**(copy 示例代码即可)**
   * 获取 [实体字符串,实体类别] 的列表
     ```python
+    from ner.ner_utils.data_checker import DatasetChecker
     from ner.ner_utils.post_processing import get_sent_entities
+
+    dataset_checker = DatasetChecker(ccfg, "bert_bilstm_crf")
     tokens, labels = dataset_checker.get_sent_predict(sent)
     
     entities_strs = get_sent_entities(sent=sent, tokens=tokens, labels=labels,return_idx=False)
@@ -382,7 +389,7 @@ dataset_checker.check_dataset(sents_labels_tuples)
 
 ###  7. 训练数据自动生成，省时省力超厉害 ：）
 -------------
-* 代码示例：
+* 代码示例：**(copy 示例代码即可)**
   * 模型回标，自动生成训练数据
     ```python
     from ner.ner_utils.post_processing import generate_and_save_new_training_data
