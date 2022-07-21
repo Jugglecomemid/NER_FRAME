@@ -13,6 +13,8 @@ from .common_utils import (
 )
 from .config import CommonConfig
 from .data_checker import DatasetChecker
+import jsonlines
+from tqdm import tqdm
 
 cfg = CommonConfig()
 abbr_entities_dict = cfg.abbr_entities_dict
@@ -69,11 +71,12 @@ def generate_and_save_new_training_data(sents, save_path, ccfg, model_name="bert
     """
     dataset_checker = DatasetChecker(ccfg, model_name)
     with jsonlines.open(save_path, "w") as fp:
-        for i, s in enumerate(sents):
-            if len(s) > 250:
-                continue
-            tokens, labels = dataset_checker.get_sent_predict(s)
-            entities_idxes = get_sent_entities(sent=s, tokens=tokens, labels=labels,return_idx=True)
-            fp.write({"id": str(i), "data": s, "label": entities_idxes})
-            pbr.update(1)
+        with tqdm(total=len(sents)) as pbr:
+            for i, s in enumerate(sents):
+                if len(s) > 250:
+                    continue
+                tokens, labels = dataset_checker.get_sent_predict(s)
+                entities_idxes = get_sent_entities(sent=s, tokens=tokens, labels=labels,return_idx=True)
+                fp.write({"id": str(i), "data": s, "label": entities_idxes})
+                pbr.update(1)
     print("done ...")
