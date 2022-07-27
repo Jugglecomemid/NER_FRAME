@@ -11,7 +11,7 @@ from ner.ner_utils.config import CommonConfig, ModelConfig
 from ner.ner_utils.common_utils import read_json, set_work_dir
 
 # 必须设置
-workspace_absolute_path = "/home/qliu/workspace/ner_test"
+workspace_absolute_path = "/home/hesy/extract_words/extract_company_name/ner_business_scope"
 app = Flask(__name__)
 @app.route('/predict_by_bert_crf', methods=['POST'])
 def predict_by_bert_crf():
@@ -40,6 +40,7 @@ def predict_by_bert_crf():
     _, pred_label_seq_ids = model(input_ids=input_ids, segment_ids=segment_ids, input_mask=input_mask)
     pred_label_seq_ids = pred_label_seq_ids[0]
     tokens = bert_tokenizer.tokenize(sent)
+    tokens = ["START"] + tokens + ["END"]
     labels = [idx_labels_dict[l.item()] for l in pred_label_seq_ids]
     res["response"] = {"sent": sent, "tokens": tokens, "labels": labels}
     return json.dumps(res)
