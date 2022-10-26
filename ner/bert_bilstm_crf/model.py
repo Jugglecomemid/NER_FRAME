@@ -49,7 +49,7 @@ class BertBiLstmCrf(nn.Module):
         last_hidden_state = outputs.last_hidden_state
         batch_size = last_hidden_state.shape[0]
         seq_length = last_hidden_state.shape[1]
-        a, b = torch.randn(2 * self.lstm_layers, batch_size, self.lstm_hidden_size), torch.randn(2 * self.lstm_layers,batch_size, self.lstm_hidden_size)
+        a, b = torch.randn(2 * self.lstm_layers, batch_size, self.lstm_hidden_size).to(self.device), torch.randn(2 * self.lstm_layers,batch_size, self.lstm_hidden_size).to(self.device)
         hidden = (a, b)
         lstm_out, hidden = self.lstm(last_hidden_state, hidden)
         lstm_out = lstm_out.contiguous().view(-1, self.lstm_hidden_size*2)
