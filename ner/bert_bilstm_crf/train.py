@@ -25,14 +25,14 @@ def train(common_config, model_config):
     prev_acc_score = bert_bilstm_crf.prev_acc_score
     prev_f1_score = bert_bilstm_crf.prev_f1_score
     print("model loading completed ...")
-    print("model epoch: {}, previous acc: {}, previous f1_score : {}".format(start_epoch, prev_acc_score, prev_f1_score))
+    print("model epoch: {}, previous acc: {:.4f}, previous f1_score : {:.4f}".format(start_epoch, prev_acc_score, prev_f1_score))
 
     lr = model_config.lr
 
     # 将模型转移到 device 上
     ts = time.time()
     model.to(common_config.device)
-    print("move model to {} costs {} ...".format(common_config.device, time.time()-ts))
+    print("move model to {} costs {:.4f} ...".format(common_config.device, time.time()-ts))
 
     # 优化器
     named_params = list(model.named_parameters())
@@ -83,10 +83,10 @@ def train(common_config, model_config):
                 optimizer.zero_grad()
                 global_step_th += 1
 
-            print("epoch: {}, step: {}, total_batch_num: {}, loss is {} ...".format(epoch, step, total_batch_num, loss.item()))
+            print("epoch: {}, step: {}, total_batch_num: {}, loss is {:.4f} ...".format(epoch, step, total_batch_num, loss.item()))
 
         print("-"*50)
-        print("epoch {} completed, mean loss is {}, costs: {} ...".format(epoch, round(tr_loss / total_batch_num, 4), round((time.time() - start_time) / 60, 3)))
+        print("epoch {} completed, mean loss is {:.4f}, costs: {:.4f} ...".format(epoch, round(tr_loss / total_batch_num, 4), round((time.time() - start_time) / 60, 3)))
         eval_acc, eval_f1 = evaluate(model, dev_dataloader, common_config.batch_size, epoch, "dev dataset", common_config.device)
 
         # 保存最佳模型
@@ -99,6 +99,6 @@ def train(common_config, model_config):
                 "max_seq_length": common_config.max_seq_length
                 }, 
                 os.path.join(common_config.checkpoint_dir, model_config.bert_bilstm_crf_model_name))
-            print("save new model, new f1 & accuracy {} - {} ... previous f1 & accuracy  {} - {} ... ".format(eval_f1, eval_acc, prev_f1_score, prev_acc_score))
+            print("save new model, new f1 & accuracy {:.4f} - {:.4f} ... previous f1 & accuracy  {:.4f} - {:.4f} ... ".format(eval_f1, eval_acc, prev_f1_score, prev_acc_score))
             prev_f1_score = eval_f1
             prev_acc_score = eval_acc
