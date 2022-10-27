@@ -28,5 +28,5 @@ def evaluate(model, dataloader, batch_size, epoch_th, dataset_name, device):
 
     test_acc = correct / total
     precision, recall, f1 = count_f1_score(all_true_labels, all_pred_labels)
-    print("dataset's name is {} ... evaluate epoch : {}, precision: {}, recall: {}, f1: {}, costs : {}".format(dataset_name, epoch_th, precision, recall, f1, round(time.time() - start_time, 3)))
+    print("dataset's name is {} ... evaluate epoch : {}, precision: {:.4f}, recall: {:.4f}, f1: {:.4f}, costs : {:.4f}".format(dataset_name, epoch_th, precision, recall, f1, round(time.time() - start_time, 3)))
     return test_acc, f1
