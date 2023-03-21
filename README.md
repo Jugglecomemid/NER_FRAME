@@ -1,7 +1,6 @@
 ## NER
-NER：最简单的 NER 全流程组件
-* Author：qliu
-* Updated：2021-12-20
+NER：简单的 NER 全流程组件
+
 
 <!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
 

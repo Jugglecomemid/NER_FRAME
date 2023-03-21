@@ -1,13 +1,12 @@
 """
 sample_code.py: 完整流程的示例代码
-说明: 若各个文件路径与 README.md 中一致,这部分为训练测试部署优化模型所需的全部代码,所以,请一定先看 README.md :)
-by: qliu
-update date: 2021-12-17
+说明: 此文件仅展示框架性代码
+
 """
 ## 更新配置参数
-# 设置指定路径为工作路径
+# 设置指定路径为项目路径
 from ner.ner_utils.common_utils import set_work_dir
-workspace_path = "/home/qliu/workspace/ner_test"
+workspace_path = ""
 set_work_dir(workspace_path)
 
 # 根据指定的工作路径,修改各类文件的相对路径
