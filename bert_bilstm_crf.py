@@ -1,6 +1,6 @@
 """
 bert_bilstm_crf.py: BERT BILSTM CRF NER 模型预测服务部署模块
-by: qliu
+by: hesy
 update date: 2021-12-17
 """
 
@@ -12,7 +12,7 @@ from ner.ner_utils.config import CommonConfig, ModelConfig
 from ner.ner_utils.common_utils import read_json, set_work_dir
 
 # 必须设置
-workspace_absolute_path = "/home/qliu/workspace/ner_test"
+workspace_absolute_path = "/home/hesy/workspace/ner_test"
 app = Flask(__name__)
 @app.route('/predict_by_bert_bilstm_crf', methods=['POST'])
 def predict_by_bert_bilstm_crf():

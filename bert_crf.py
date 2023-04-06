@@ -1,6 +1,6 @@
 """
 bert_crf.py: BERT CRF NER 模型预测服务部署模块
-by: qliu
+by: hesy
 update date: 2021-12-17
 """
 import os, torch, json
