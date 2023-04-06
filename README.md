@@ -47,71 +47,71 @@ NER：简单的 NER 全流程组件
 ```
 project
 │   README.md
-│   sample_codes.py                                                                                                      完整 NER 流程的示例代码
-│   bert.py                                                                                                                           部署 bert ner 服务
-│   bert_crf.py                                                                                                                   部署 bert crf ner 服务
-│   bert_bilstm_crf.py                                                                                                    部署 bert bilstm crf ner 服务
-│   setup.py                                                                                                                        生成 ner 安装包
+│   sample_codes.py                   完整 NER 流程的示例代码
+│   bert.py                           部署 bert ner 服务
+│   bert_crf.py                       部署 bert crf ner 服务
+│   bert_bilstm_crf.py                部署 bert bilstm crf ner 服务
+│   setup.py                          生成 ner 安装包
 │
 └─── data 
 │       │
-│       └─  model_data                                                                                               * 存放 训练、测试、开发、原始数据
-│       │       |  dev.txt                                                                                                          开发数据，InitialDataTxtGenerator 生成，下同
-│       │       |   label_tuples.txt                                                                                       原始句 & 标签句的映射
-│       │       |   test.txt                                                                                                         测试数据
-│       │       |   train.txt                                                                                                       训练数据
+│       └─  model_data                           * 存放 训练、测试、开发、原始数据
+│       │       |  dev.txt                       开发数据，InitialDataTxtGenerator 生成，下同
+│       │       |   label_tuples.txt             原始句 & 标签句的映射
+│       │       |   test.txt                     测试数据
+│       │       |   train.txt                    训练数据
 │       │       |   ...
 │       │
-│       └─  original_data                                                                                            * 
+│       └─  original_data                        * 
 │       │       │ 
-│       │       └ jsonl                                                                                                        *  doccano 结果文件的文件夹
-│       │             │  v1.jsonl                                                                                           * 
+│       │       └ jsonl                          * doccano 结果文件的文件夹
+│       │             │  v1.jsonl                * 
 │       │             │  ...
 │       │             │  
-│       │       │ entities.json                                                                                         * NER 实体 & 其缩写的映射字典
-│       │       │ port.json                                                                                                *各类模型预测服务的端口 & hosts 配置字典
+│       │       │ entities.json                  * NER 实体 & 其缩写的映射字典
+│       │       │ port.json                      *各类模型预测服务的端口 & hosts 配置字典
 │       │       
-│       └─ result                                                                                                              * 存放训练好的模型文件
-│       │       |   bert.pt                                                                                                         训练生成的 bert ner 模型
+│       └─ result                                * 存放训练好的模型文件
+│       │       |   bert.pt                      训练生成的 bert ner 模型
 │       │   ...
 │   
-└─── hfl                                                                                                                       * bert 模型文件
+└─── hfl                                         * bert 模型文件
 │       │
-│       └─ chinese-bert-wwm-ext                                                                           * 预训练好的 chinese-bert 模型，下载地址: https://huggingface.co/bert-base-chinese
-│       │       |  config                                                                                                        *  bert 模型配置参数
+│       └─ chinese-bert-wwm-ext                  * 预训练好的 chinese-bert 模型，下载地址: https://huggingface.co/bert-base-chinese
+│       │       |  config                        * bert 模型配置参数
 │       │       |  ...
 │       │ 
-└─── ner                                                                                                                         ner 框架代码
+└─── ner                                         ner 框架代码
 │       │
-│       └─  bert                                                                                                                    bert 模型的训练测试评估模块
+│       └─  bert                                 bert 模型的训练测试评估模块
 │       │       |  __init__.py 
-│       │       |  evaluate.py                                                                                                 模型评估模块
-│       │       |  model.py                                                                                                      bert ner 模型模块
-│       │       |  test.py                                                                                                           模型测试模块
-│       │       |  train.py                                                                                                         模型训练模块
+│       │       |  evaluate.py                   模型评估模块
+│       │       |  model.py                      bert ner 模型模块
+│       │       |  test.py                       模型测试模块
+│       │       |  train.py                      模型训练模块
 │       │      
-│       └─  bert_bilstm_crf                                                                                            bert bilstm crf ner 模型的训练测试评估模块
+│       └─  bert_bilstm_crf                      bert bilstm crf ner 模型的训练测试评估模块
 │       │       |  __init__.py 
-│       │       |  model.py                                                                                                     bert bilstm crf ner 模型模块
-│       │       |  test.py                                                                                                          模型测试模块
-│       │       |  train.py                                                                                                        模型训练模块
+│       │       |  model.py                      bert bilstm crf ner 模型模块
+│       │       |  test.py                       模型测试模块
+│       │       |  train.py                      模型训练模块
 │       │       
-│       └─  bert_crf                                                                                                           bert crf ner 模型的训练测试评估模块
+│       └─  bert_crf                             bert crf ner 模型的训练测试评估模块
 │       │       |  __init__.py 
-│       │       |  evaluate.py                                                                                                模型评估模块
-│       │       |  model.py                                                                                                    bert crf ner 模型模块
-│       │       |  test.py                                                                                                         模型测试模块
-│       │       |  train.py                                                                                                       模型训练模块
+│       │       |  evaluate.py                   模型评估模块
+│       │       |  model.py                      bert crf ner 模型模块
+│       │       |  test.py                       模型测试模块
+│       │       |  train.py                      模型训练模块
 │       │    
-│       └─  ner_utils                                                                                                         NER 框架的预处理、后处理、其他通用模块
+│       └─  ner_utils                            NER 框架的预处理、后处理、其他通用模块
 │       │       |  __init__.py 
-│       │       |  calculate.py                                                                                              NER 算法中所有计算模块
-│       │       |  common_utils.py                                                                                   数据读写 & 工作路径设置模块
-│       │       |  config.py                                                                                                    NER 框架所涉的所有参数的配置模块
-│       │       |  data_checker.py                                                                                     数据标记正确性检查器
-│       │       |  data_loader.py                                                                                        模型数据生成器
-│       │       |  post_processing.py                                                                               数据后处理模块
-│       │       |  processing.py                                                                                           数据预处理模块
+│       │       |  calculate.py                  NER 算法中所有计算模块
+│       │       |  common_utils.py               数据读写 & 工作路径设置模块
+│       │       |  config.py                     NER 框架所涉的所有参数的配置模块
+│       │       |  data_checker.py               数据标记正确性检查器
+│       │       |  data_loader.py                模型数据生成器
+│       │       |  post_processing.py            数据后处理模块
+│       │       |  processing.py                 数据预处理模块
 │       │     
 │       │__init__.py
 │       
